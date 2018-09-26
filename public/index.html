@@ -26,14 +26,22 @@
         <div class='card'>
             <div class='card-body'>
                 <h5 class='card-title'>GET Requests</h5>
+                <p class='card-text'>Testing workflow, hit the following endpoints in order: /api/createUser,
+                    /api/associateAllegry, /api/getUser</p>
             </div>
             <ul class='list-group list-group-flush'>
                 <li class='list-group-item'>
                     GET - api/getMealPlan - Gets a one day meal plan which includes breakfast, lunch and dinner meals.
                 </li>
                 <li class='list-group-item'>
-                    GET - api/user - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac faucibus
-                    nulla, vitae egestas massa. Ut ultricies, lacus a faucibus lobortis, risus leo aliquam augue.
+                    GET - api/createUser - Creates a static user
+                </li>
+                <li class='list-group-item'>
+                    GET - api/associateAllegry - Creates a static allegry and associdates the allegry to the user
+                    created in the previous endpoint.
+                </li>
+                <li class='list-group-item'>
+                    GET - api/getUser - Gets all users and associated allergies.
                 </li>
             </ul>
         </div>
