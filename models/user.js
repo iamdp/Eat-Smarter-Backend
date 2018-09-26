@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     User.hasMany(models.allegry, {
       onDelete: "cascade"
     });
+    User.hasOne(models.mealPlan);
   };
 
   return User;
