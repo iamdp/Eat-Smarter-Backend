@@ -1,4 +1,5 @@
 var db = require("../models");
+var yummly = require("../yummly");
 
 module.exports = function(app) {
   app.get("/api/getMealPlan", function(req, res) {
@@ -31,6 +32,12 @@ module.exports = function(app) {
       .then(dbAllegry => {
         res.json(dbAllegry);
       });
+  });
+
+  app.get("/getRecipes", (req, res) => {
+    yummly.getRecipes("Cheese Bagel", result => {
+      res.json(JSON.parse(result).matches);
+    });
   });
 
   app.get("/api/getUser", (req, res) => {
