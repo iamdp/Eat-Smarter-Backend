@@ -2,7 +2,7 @@ var db = require("../models");
 var yummly = require("../yummly");
 
 module.exports = function(app) {
-  app.get("/api/getMealPlan", function(req, res) {
+  app.get("/api/getMealPlan", (req, res) => {
     res.json({
       breakfast: "Green Eggs & Ham",
       lunch: "Supreme Burger",
@@ -10,7 +10,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/api/createUser", function(req, res) {
+  app.get("/api/createUser", (req, res) => {
     db.user
       .create({
         firstName: "David",
