@@ -3,7 +3,8 @@
 Improvement on the Eat Smart app.
 Meal planning application
 
-https://young-island-66909.herokuapp.com/
+Back-End: https://young-island-66909.herokuapp.com/
+Front-End: https://fast-retreat-45254.herokuapp.com/
 
 ## GET Requests
 
