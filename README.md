@@ -7,6 +7,8 @@ Back-End: https://young-island-66909.herokuapp.com/
 
 Front-End: https://fast-retreat-45254.herokuapp.com/
 
+Front-End Git-Hub: https://github.com/singha53/Eat-Smarter-Frontend
+
 ## GET Requests
 
 - **/api/getMealPlan** - Proof of concept
