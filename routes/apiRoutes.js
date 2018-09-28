@@ -1,5 +1,5 @@
 var db = require("../models");
-var yummly = require("../yummly");
+var yummly = require("../moc/yummly");
 
 module.exports = function(app) {
   app.get("/api/getMealPlan", (req, res) => {
@@ -34,6 +34,28 @@ module.exports = function(app) {
       });
   });
 
+  app.post("/api/favourite/add", (req, res) => {
+    /*
+      req.body.userId
+      req.body.recipeId
+      db.favourite.create()
+    */
+  });
+
+  app.delete("/api/favourite/destory", (req, res) => {
+    /*
+      req.body.favouriteId
+      db.favourite.destory()
+    */
+  });
+
+  app.delete("/api/user/destory", (req, res) => {
+    /* 
+      req.body.userId
+      db.user.destory()
+    */
+  });
+
   app.get("/getRecipes", (req, res) => {
     yummly.getRecipes("Cheese Bagel", result => {
       res.json(JSON.parse(result).matches);
@@ -41,8 +63,13 @@ module.exports = function(app) {
   });
 
   app.get("/api/getUser", (req, res) => {
-    db.user.findAll({ include: [db.allegry] }).then(dbUser => {
+    /* 
+      res.body.userId
+      db.user.findAll()
+
+      EXAMPLE:
+      db.user.findAll({ include: [db.allegry] }).then(dbUser => {
       res.json(dbUser);
-    });
+    }); */
   });
 };
