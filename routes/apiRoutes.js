@@ -1,5 +1,5 @@
 var db = require("../models");
-var yummly = require("../yummly");
+var yummly = require("../moc/yummly");
 
 module.exports = function(app) {
   app.get("/api/getMealPlan", (req, res) => {
