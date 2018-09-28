@@ -1,8 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
-  var Allegry = sequelize.define("allegry", {
+  var Allergy = sequelize.define("allergy", {
     allegryDesc: DataTypes.STRING,
     allegryApiCode: DataTypes.STRING
   });
 
-  return Allegry;
+  return Allergy;
 };
