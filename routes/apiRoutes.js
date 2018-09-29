@@ -23,14 +23,15 @@ module.exports = function(app) {
       });
   });
 
-  app.get("/api/associateAllegry", (req, res) => {
-    db.allegry
+  app.get("/api/associateAllergy", (req, res) => {
+    db.allergy
       .create({
         userId: "1",
-        allegryDesc: "Peanuts"
+        allergyDesc: "Peanuts",
+        allergyApiCode: "abc"
       })
-      .then(dbAllegry => {
-        res.json(dbAllegry);
+      .then(result => {
+        res.json(result);
       });
   });
 
@@ -66,10 +67,11 @@ module.exports = function(app) {
     /* 
       res.body.userId
       db.user.findAll()
-
+  
       EXAMPLE:
-      db.user.findAll({ include: [db.allegry] }).then(dbUser => {
-      res.json(dbUser);
-    }); */
+    */
+    db.user.findAll({ include: [db.allergy] }).then(result => {
+      res.json(result);
+    });
   });
 };
