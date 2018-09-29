@@ -63,6 +63,12 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/getRecipe", (req, res) => {
+    /* 
+      req.body.recipeId 
+    */
+  });
+
   app.get("/api/getUser", (req, res) => {
     /* 
       res.body.userId
