@@ -41,8 +41,17 @@ module.exports = function(app) {
       req.body.recipeId
       db.favourite.create()
     */
+    db.favorite
+      .create({
+        userId: req.body.userId,
+        recipeId: req.body.recipeId
+      })
+      .then(result => {
+        res.json(result);
+      });
   });
 
+  // Saw some previous examples in our code where we used .delete(), so I need to confirm the destroy and delete usages
   app.delete("/api/favourite/destory", (req, res) => {
     /*
       req.body.favouriteId
@@ -55,6 +64,13 @@ module.exports = function(app) {
       req.body.userId
       db.user.destory()
     */
+    db.favorite
+      .destroy({
+        userId: req.body.userId
+      })
+      .then(result => {
+        res.json(result);
+      });
   });
 
   app.get("/getRecipes", (req, res) => {
@@ -67,6 +83,14 @@ module.exports = function(app) {
     /* 
       req.body.recipeId 
     */
+    yummly.getRecipe(
+      {
+        recipeId: req.body.recipeId
+      },
+      result => {
+        res.json(JSON.parse(result).matches);
+      }
+    );
   });
 
   app.get("/api/getUser", (req, res) => {
