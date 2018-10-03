@@ -2,21 +2,36 @@ var db = require("../models");
 var yummly = require("../moc/yummly");
 
 module.exports = function(app) {
+  // Unnecessary EndPoint
+  /*   
   app.get("/api/getMealPlan", (req, res) => {
     res.json({
       breakfast: "Green Eggs & Ham",
       lunch: "Supreme Burger",
       dinner: "Just Alfredo"
     });
-  });
+  }); 
+*/
 
-  app.get("/api/createUser", (req, res) => {
+  app.post("/api/createUser", (req, res) => {
     db.user
       .create({
-        firstName: "David",
-        lastName: "Pham",
-        age: 33,
-        caloricGoal: 2200
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        age: req.body.age,
+        caloricGoal: req.body.caloricGoal
+      })
+      .then(function(dbUser) {
+        res.json(dbUser);
+      });
+  });
+
+  app.post("/api/saveDailyMealPlan", (req, res) => {
+    db.dailyMealPlan
+      .create({
+        dayOfTheWeek: req.body.dayOfTheWeek,
+        meal: req.body.meal,
+        recipeId: req.body.recipeId
       })
       .then(function(dbUser) {
         res.json(dbUser);
@@ -26,9 +41,9 @@ module.exports = function(app) {
   app.get("/api/associateAllergy", (req, res) => {
     db.allergy
       .create({
-        userId: "1",
-        allergyDesc: "Peanuts",
-        allergyApiCode: "abc"
+        userId: req.body.userId,
+        allergyDesc: req.body.allergyDesc,
+        allergyApiCode: req.body.allergyApiCode
       })
       .then(result => {
         res.json(result);
@@ -43,23 +58,23 @@ module.exports = function(app) {
     */
   });
 
-  app.delete("/api/favourite/destory", (req, res) => {
+  app.delete("/api/favourite/destroy", (req, res) => {
     /*
       req.body.favouriteId
-      db.favourite.destory()
+      db.favourite.destroy()
     */
   });
 
-  app.delete("/api/user/destory", (req, res) => {
+  app.delete("/api/user/destroy", (req, res) => {
     /* 
       req.body.userId
-      db.user.destory()
+      db.user.destroy()
     */
   });
 
-  app.get("/getRecipes", (req, res) => {
-    yummly.getRecipes("Cheese Bagel", result => {
-      res.json(JSON.parse(result).matches);
+  app.get("/api/getRecipes", (req, res) => {
+    yummly.getRecipes(req.query.q, result => {
+      res.json(JSON.parse(result));
     });
   });
 

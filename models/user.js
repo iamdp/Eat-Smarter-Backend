@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("user", {
     firstName: DataTypes.STRING,
-    lastName: DataTypes.TEXT,
+    lastName: DataTypes.STRING,
     age: DataTypes.INTEGER,
     caloricGoal: DataTypes.INTEGER
   });
