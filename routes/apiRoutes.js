@@ -1,7 +1,7 @@
 var db = require("../models");
 var yummly = require("../moc/yummly");
 
-// module.exports = function(app) {
+module.exports = function(app) {
 //   app.get("/api/getMealPlan", (req, res) => {
 //     res.json({
 //       breakfast: "Green Eggs & Ham",
@@ -51,7 +51,7 @@ var yummly = require("../moc/yummly");
       });
   });
 
-  // Saw some previous examples in our code where we used .delete(), so I need to confirm the destroy and delete usages
+  
   app.delete("/api/favourite/destory", (req, res) => {
     /*
       req.body.favouriteId
