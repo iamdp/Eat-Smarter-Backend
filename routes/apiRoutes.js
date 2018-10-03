@@ -18,6 +18,7 @@ module.exports = function(app) {
       .create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        userName: req.body.userName,
         email: req.body.email,
         password: req.body.password,
         age: req.body.age,
@@ -39,8 +40,6 @@ module.exports = function(app) {
         res.json(dbUser);
       });
     })
-
-
 
   app.post("/api/associateAllergy", (req, res) => {
     db.allergy
@@ -114,9 +113,6 @@ module.exports = function(app) {
 
     });
   });
-
-
-
 
   app.get("/api/getUser", (req, res) => {
     /* 
