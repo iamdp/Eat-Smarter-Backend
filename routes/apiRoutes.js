@@ -4,9 +4,9 @@ var yummly = require("../moc/yummly");
 module.exports = function(app) {
   app.get("/api/getMealPlan", (req, res) => {
     res.json({
-      breakfast: "Green Eggs & Ham",
-      lunch: "Supreme Burger",
-      dinner: "Just Alfredo"
+      breakfast: req.body.breakfast,
+      lunch: req.body.lunch,
+      dinner: req.body.dinner
     });
   });
 
@@ -15,6 +15,8 @@ module.exports = function(app) {
       .create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
         age: req.body.age,
         caloricGoal: req.body.caloricGoal
       })
@@ -36,11 +38,6 @@ module.exports = function(app) {
   });
 
   app.post("/api/favourite/add", (req, res) => {
-    /*
-      req.body.userId
-      req.body.recipeId
-      db.favourite.create()
-    */
     db.favourite
       .create({
         userId: req.body.userId,
@@ -51,38 +48,37 @@ module.exports = function(app) {
       });
   });
 
-  
   app.delete("/api/favourite/destory", (req, res) => {
-    /*
-      req.body.favouriteId
-      db.favourite.destory()
-    */
-  });
-
-  app.delete("/api/user/destory", (req, res) => {
-    /* 
-      req.body.userId
-      db.user.destory()
-    */
-    db.favorite
-      .destroy({
+    db.favourite
+      .delete({
         userId: req.body.userId
       })
       .then(result => {
         res.json(result);
+        res.status(200).end();
       });
   });
 
-  // app.get("/getRecipes", (req, res) => {
-  //   yummly.getRecipes("Cheese Bagel", result => {
-  //     res.json(JSON.parse(result).matches);
-  //   });
-  // });
+  app.delete("/api/user/destory", (req, res) => {
+    db.user
+      .delete({
+        userId: req.body.userId
+      })
+      .then(result => {
+        res.json(result);
+        res.status(200).end();
+      });
+  });
 
+  // if the user doesn't type in a recipe
+  app.get("/getRecipes", (req, res) => {
+    yummly.getRecipes("", result => {
+      res.json(JSON.parse(result).matches);
+    });
+  });
+
+  // recipes by user search
   app.get("/api/getRecipes:recipe?", (req, res) => {
-    /* 
-      req.body.recipeId 
-    */
     yummly.getRecipes(
       {
         recipeId: req.params.recipe
@@ -93,7 +89,6 @@ module.exports = function(app) {
     );
   });
 
- 
   app.get("/api/getUser", (req, res) => {
     /* 
       res.body.userId
