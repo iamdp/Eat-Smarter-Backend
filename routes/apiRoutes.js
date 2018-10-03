@@ -1,22 +1,22 @@
 var db = require("../models");
 var yummly = require("../moc/yummly");
 
-module.exports = function(app) {
-  app.get("/api/getMealPlan", (req, res) => {
-    res.json({
-      breakfast: "Green Eggs & Ham",
-      lunch: "Supreme Burger",
-      dinner: "Just Alfredo"
-    });
-  });
+// module.exports = function(app) {
+//   app.get("/api/getMealPlan", (req, res) => {
+//     res.json({
+//       breakfast: "Green Eggs & Ham",
+//       lunch: "Supreme Burger",
+//       dinner: "Just Alfredo"
+//     });
+//   });
 
-  app.get("/api/createUser", (req, res) => {
+  app.post("/api/createUser", (req, res) => {
     db.user
       .create({
-        firstName: "David",
-        lastName: "Pham",
-        age: 33,
-        caloricGoal: 2200
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        age: req.body.age,
+        caloricGoal: req.body.caloricGoal
       })
       .then(function(dbUser) {
         res.json(dbUser);
@@ -26,9 +26,9 @@ module.exports = function(app) {
   app.get("/api/associateAllergy", (req, res) => {
     db.allergy
       .create({
-        userId: "1",
-        allergyDesc: "Peanuts",
-        allergyApiCode: "abc"
+        userId: req.body.userId,
+        allergyDesc: req.body.allergyDesc,
+        allergyApiCode: req.body.allergyApiCode
       })
       .then(result => {
         res.json(result);
@@ -73,19 +73,19 @@ module.exports = function(app) {
       });
   });
 
-  app.get("/getRecipes", (req, res) => {
-    yummly.getRecipes("Cheese Bagel", result => {
-      res.json(JSON.parse(result).matches);
-    });
-  });
+  // app.get("/getRecipes", (req, res) => {
+  //   yummly.getRecipes("Cheese Bagel", result => {
+  //     res.json(JSON.parse(result).matches);
+  //   });
+  // });
 
-  app.get("/api/getRecipe", (req, res) => {
+  app.get("/api/getRecipes:recipe?", (req, res) => {
     /* 
       req.body.recipeId 
     */
     yummly.getRecipe(
       {
-        recipeId: req.body.recipeId
+        recipeId: req.params.recipe
       },
       result => {
         res.json(JSON.parse(result).matches);
