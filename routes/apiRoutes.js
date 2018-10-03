@@ -2,13 +2,13 @@ var db = require("../models");
 var yummly = require("../moc/yummly");
 
 module.exports = function(app) {
-//   app.get("/api/getMealPlan", (req, res) => {
-//     res.json({
-//       breakfast: "Green Eggs & Ham",
-//       lunch: "Supreme Burger",
-//       dinner: "Just Alfredo"
-//     });
-//   });
+  app.get("/api/getMealPlan", (req, res) => {
+    res.json({
+      breakfast: "Green Eggs & Ham",
+      lunch: "Supreme Burger",
+      dinner: "Just Alfredo"
+    });
+  });
 
   app.post("/api/createUser", (req, res) => {
     db.user
@@ -23,7 +23,7 @@ module.exports = function(app) {
       });
   });
 
-  app.get("/api/associateAllergy", (req, res) => {
+  app.post("/api/associateAllergy", (req, res) => {
     db.allergy
       .create({
         userId: req.body.userId,
@@ -41,7 +41,7 @@ module.exports = function(app) {
       req.body.recipeId
       db.favourite.create()
     */
-    db.favorite
+    db.favourite
       .create({
         userId: req.body.userId,
         recipeId: req.body.recipeId
@@ -83,7 +83,7 @@ module.exports = function(app) {
     /* 
       req.body.recipeId 
     */
-    yummly.getRecipe(
+    yummly.getRecipes(
       {
         recipeId: req.params.recipe
       },
@@ -93,6 +93,7 @@ module.exports = function(app) {
     );
   });
 
+ 
   app.get("/api/getUser", (req, res) => {
     /* 
       res.body.userId
