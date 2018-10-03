@@ -68,7 +68,7 @@ module.exports = function(app) {
     db.favourite
       .destroy({
         where: {
-          id: req.body.id
+          recipeId: req.body.recipeId
         }
       })
       .then(function(dbFavourite) {
