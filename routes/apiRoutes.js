@@ -39,7 +39,7 @@ module.exports = function(app) {
       .then(function(dbUser) {
         res.json(dbUser);
       });
-    })
+  });
 
   app.post("/api/associateAllergy", (req, res) => {
     db.allergy
@@ -64,25 +64,27 @@ module.exports = function(app) {
       });
   });
 
-  app.delete("/api/favourite/destory", (req, res) => {
+  app.delete("/api/favourite/destroy", (req, res) => {
     db.favourite
-      .delete({
-        userId: req.body.userId
+      .destroy({
+        where: {
+          id: req.body.id
+        }
       })
-      .then(result => {
-        res.json(result);
-        res.status(200).end();
+      .then(function(dbFavourite) {
+        res.json(dbFavourite);
       });
   });
 
-  app.delete("/api/user/destory", (req, res) => {
+  app.delete("/api/user/destroy", (req, res) => {
     db.user
-      .delete({
-        userId: req.body.userId
+      .destroy({
+        where: {
+          userId: req.body.userId
+        }
       })
-      .then(result => {
-        res.json(result);
-        res.status(200).end();
+      .then(function(dbUser) {
+        res.json(dbUser);
       });
   });
 
@@ -92,7 +94,6 @@ module.exports = function(app) {
       res.json(JSON.parse(result).matches);
     });
   });
-
 
   // recipes by user search
   app.get("/api/getRecipes:recipe?", (req, res) => {
@@ -106,11 +107,10 @@ module.exports = function(app) {
     );
   });
 
-
+  // find out what the difference is between this getRecipes and the one above
   app.get("/api/getRecipes", (req, res) => {
     yummly.getRecipes(req.query.q, result => {
       res.json(JSON.parse(result));
-
     });
   });
 
