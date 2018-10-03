@@ -1,5 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("user", {
+    
+    
+    
+
     userId: { autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER },
     firstName: {
       type: DataTypes.STRING,
@@ -27,6 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     }},
     age: {type:DataTypes.INTEGER,allowNull:false},
     caloricGoal: {type:DataTypes.INTEGER, allowNull:false}
+
   });
 
   User.associate = models => {

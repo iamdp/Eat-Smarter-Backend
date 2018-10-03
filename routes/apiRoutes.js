@@ -2,13 +2,16 @@ var db = require("../models");
 var yummly = require("../moc/yummly");
 
 module.exports = function(app) {
+  // Unnecessary EndPoint
+  /*   
   app.get("/api/getMealPlan", (req, res) => {
     res.json({
       breakfast: req.body.breakfast,
       lunch: req.body.lunch,
       dinner: req.body.dinner
     });
-  });
+  }); 
+*/
 
   app.post("/api/createUser", (req, res) => {
     db.user
@@ -24,6 +27,20 @@ module.exports = function(app) {
         res.json(dbUser);
       });
   });
+
+  app.post("/api/saveDailyMealPlan", (req, res) => {
+    db.dailyMealPlan
+      .create({
+        dayOfTheWeek: req.body.dayOfTheWeek,
+        meal: req.body.meal,
+        recipeId: req.body.recipeId
+      })
+      .then(function(dbUser) {
+        res.json(dbUser);
+      });
+    })
+
+
 
   app.post("/api/associateAllergy", (req, res) => {
     db.allergy
@@ -77,6 +94,7 @@ module.exports = function(app) {
     });
   });
 
+
   // recipes by user search
   app.get("/api/getRecipes:recipe?", (req, res) => {
     yummly.getRecipes(
@@ -88,6 +106,17 @@ module.exports = function(app) {
       }
     );
   });
+
+
+  app.get("/api/getRecipes", (req, res) => {
+    yummly.getRecipes(req.query.q, result => {
+      res.json(JSON.parse(result));
+
+    });
+  });
+
+
+
 
   app.get("/api/getUser", (req, res) => {
     /* 
