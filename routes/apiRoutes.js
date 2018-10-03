@@ -89,7 +89,7 @@ module.exports = function (app) {
     db.user.findALL({
       where: {
         userId: req.params.userId,
-        include: [db.allegry]
+        include: [db.allergy]
       }
 
     })
