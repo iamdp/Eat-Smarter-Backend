@@ -1,13 +1,15 @@
 require("dotenv").config();
 var express = require("express");
 var bodyParser = require("body-parser");
+var cors = require("cors");
 
 var db = require("./models");
 
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 4000;
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
@@ -26,8 +28,8 @@ if (process.env.NODE_ENV === "test") {
 app.use(express.static("public"));
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
+db.sequelize.sync(syncOptions).then(function () {
+  app.listen(PORT, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
