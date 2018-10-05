@@ -6,9 +6,9 @@ module.exports = function (app) {
   /*   
   app.get("/api/getMealPlan", (req, res) => {
     res.json({
-      breakfast: "Green Eggs & Ham",
-      lunch: "Supreme Burger",
-      dinner: "Just Alfredo"
+      breakfast: req.body.breakfast,
+      lunch: req.body.lunch,
+      dinner: req.body.dinner
     });
   }); 
 */
@@ -18,6 +18,9 @@ module.exports = function (app) {
       .create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        userName: req.body.userName,
+        email: req.body.email,
+        password: req.body.password,
         age: req.body.age,
         caloricGoal: req.body.caloricGoal
       })
@@ -50,7 +53,7 @@ module.exports = function (app) {
       });
   });
 
-  app.get("/api/associateAllergy", (req, res) => {
+  app.post("/api/associateAllergy", (req, res) => {
     db.allergy
       .create({
         userId: req.body.userId,
@@ -65,58 +68,62 @@ module.exports = function (app) {
   app.post("/api/favourite/add", (req, res) => {
     db.favourite
       .create({
-        favouriteId: req.body.favouriteId,
+        userId: req.body.userId,
         recipeId: req.body.recipeId
       })
-      .then(dbFavourite => {
-        res.json(dbFavourite);
+      .then(result => {
+        res.json(result);
       });
   });
 
-  app.delete("/api/favourite/destory", (req, res) => {
-    db.favourite.destroy({
-      where: {
-        favouriteId: req.body.favouriteId,
-        recipeId: req.params.recipeId
-      }
-    })
+  app.delete("/api/favourite/destroy", (req, res) => {
+    db.favourite
+      .destroy({
+        where: {
+          recipeId: req.body.recipeId
+        }
+      })
       .then(function (dbFavourite) {
         res.json(dbFavourite);
       });
-
-    /*
-      req.body.favouriteId
-      db.favourite.destroy()
-    */
   });
 
-  app.delete("/api/user/destory", (req, res) => {
-    db.user.destroy({
-      where: {
-        userId: req.body.userId,
-        allegryDesc: req.body.allegryDesc
-      }
-    })
+  app.delete("/api/user/destroy", (req, res) => {
+    db.user
+      .destroy({
+        where: {
+          userId: req.body.userId
+        }
+      })
       .then(function (dbUser) {
         res.json(dbUser);
       });
-
-    /* 
-      req.body.userId
-      db.user.destroy()
-    */
   });
 
+  // if the user doesn't type in a recipe
+  app.get("/getRecipes", (req, res) => {
+    yummly.getRecipes("", result => {
+      res.json(JSON.parse(result).matches);
+    });
+  });
+
+  // recipes by user search
+  app.get("/api/getRecipes:recipe?", (req, res) => {
+    yummly.getRecipes(
+      {
+        recipeId: req.params.recipe
+      },
+      result => {
+        res.json(JSON.parse(result).matches);
+      }
+    );
+  });
+
+  // find out what the difference is between this getRecipes and the one above
   app.get("/api/getRecipes", (req, res) => {
     yummly.getRecipes(req.query.q, result => {
       res.json(JSON.parse(result));
     });
-  });
-
-  app.get("/api/getRecipe", (req, res) => {
-    /* 
-      req.body.recipeId 
-    */
   });
 
   app.get("/api/getUser", (req, res) => {
