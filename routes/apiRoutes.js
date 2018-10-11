@@ -96,15 +96,10 @@ module.exports = function(app) {
   });
 
   // recipes by user search
-  app.get("/api/getRecipes:recipe?", (req, res) => {
-    yummly.getRecipes(
-      {
-        recipeId: req.params.recipe
-      },
-      result => {
-        res.json(JSON.parse(result).matches);
-      }
-    );
+  app.get("/api/getRecipes", (req, res) => {
+    yummly.getRecipes(req.query.q, result => {
+      res.json(JSON.parse(result).matches);
+    });
   });
 
   // find out what the difference is between this getRecipes and the one above
